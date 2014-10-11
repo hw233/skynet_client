@@ -27,3 +27,27 @@
 *.i*86
 *.x86_64
 *.hex
+
+# vim
+*.swp
+cscope.*.out
+cscope.out
+tags
+.gitattributes
+
+# vc project
+*.sln
+*.suo
+*.vcxproj
+*.vcxproj.filters
+# server
+log/*
+ds/*.rdb
+ds/*.aof
+ds/*.log
+ds/redis-server
+ds/redis-cli
+
+# py
+*.pyc
+*.pyo
