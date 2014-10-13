@@ -1,5 +1,6 @@
+require "base"
 local socket = require "clientsocket"
-local protomgr = require "proto.protomgr"
+local bit32 = require "bit32"
 
 -- conf
 require "conf.srvlist"
@@ -8,6 +9,7 @@ local socketmgr = {}
 
 function socketmgr.init()
 	socketmgr.servers = {}
+	socketmgr.getsrv("gs")
 end
 
 
@@ -19,26 +21,17 @@ function socketmgr.getsrv(srvname)
 		local tmp = {
 			fd = fd,
 			session = 0,
-			sessions = {} --FORMAT: {sessionid:response_callback}
+			sessions = {},
 			srvname = srvname,
 			last = "",
 		}
 		socketmgr.servers[srvname] = tmp
-		socketmgr.servers[fd] = tmp
 	end
 	return socketmgr.servers[srvname]
 end
 
 function socketmgr.delsrv(srvname)
-	local fd = srvname
-	if type(srvname) == "string" then
-		fd = socketmgr.servers[srvname]
-	else
-		assert(type(srvname) == "integer")
-		srvname = socketmgr.servers[fd]
-	end
 	socketmgr.servers[srvname] = nil
-	socketmgr.servers[fd] = nil
 end
 
 function socketmgr.onclose(srvname)
@@ -61,7 +54,7 @@ end
 function socketmgr.recv_package(srvname)
 	local srv = socketmgr.getsrv(srvname)
 	local result
-	result,srv.last = unpack_package(srv.last)
+	result,srv.last = socketmgr.unpack_package(srv.last)
 	if result then
 		return result
 	end
@@ -77,7 +70,9 @@ function socketmgr.recv_package(srvname)
 	return result
 end
 
-local function send_package(fd,pack)
+function socketmgr.send_package(srvname,pack)
+	local srv = socketmgr.getsrv(srvname)
+	local fd = assert(srv.fd)
 	local size = #pack
 	local package = string.char(bit32.extract(size,8,8)) ..
 		string.char(bit32.extract(size,0,8)) ..
@@ -85,24 +80,48 @@ local function send_package(fd,pack)
 	socket.send(fd,package)
 end
 
+
 function socketmgr.send_request(srvname,protoname,cmd,args,onresponse)
+	local proto = require "proto"
 	local srv = socketmgr.getsrv(srvname)
-	local fd = assert(srv.fd)
-	local protoobj = protomgr.getproto(protoname)
-	session = session + 1
-	srv.sessions[session] = onresponse
-	local str = protoobj.request(cmd,args,session)
-	send_package(fd,str)
+	srv.session = srv.session + 1
+	srv.sessions[srv.session] = {
+		protoname = protoname,
+		cmd = cmd,
+		args = args,
+		onresponse = onresponse,
+	}
+	local str = proto.request(protoname .. "_" .. cmd,args,srv.session)
+	socketmgr.send_package(srvname,str)
 end
 
 function socketmgr.dispatch()
+	local proto = require "proto"
 	for srvname,srv in pairs(socketmgr.servers)	do
+		print("srvname",srvname)
 		while true do
 			local v = socketmgr.recv_package(srvname)
 			if not v then
 				break
 			end
-			protomgr.dispatch(srvname,v)
+			proto.dispatch(srvname,v)
+		end
+		cmds = {
+			"test=require('net.test');test.handshake('gs')",
+			"test=require('net.test');test.set({what='hello',value='world'})",
+			"test=require('net.test');test.get({what='hello',})",
+		}
+		cmd = 
+		if cmd then
+			if cmd == "exit" then
+				return "exit"
+			end
+			local func = load(cmd)	
+			local ok,result = pcall(func)
+			print(cmd,ok,result)
+			socket.usleep(5000000)
+		else
+			socket.usleep(100)
 		end
 	end
 end
