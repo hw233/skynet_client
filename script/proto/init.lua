@@ -34,7 +34,6 @@ local function onresponse(srvname,session,args)
 	})
 	local srv = socketmgr.getsrv(srvname)
 	local ses = assert(srv.sessions[session],"error session id:%s" .. tostring(session))
-	pprintf("ses:%s",ses)
 	local callback = ses.onresponse
 	if not callback then
 		callback = net[ses.protoname].RESPONSE[ses.cmd]

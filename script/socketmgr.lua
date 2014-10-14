@@ -98,7 +98,7 @@ end
 function socketmgr.dispatch()
 	local proto = require "proto"
 	for srvname,srv in pairs(socketmgr.servers)	do
-		print("srvname",srvname)
+		--print("srvname",srvname)
 		while true do
 			local v = socketmgr.recv_package(srvname)
 			if not v then
@@ -111,7 +111,8 @@ function socketmgr.dispatch()
 			"test=require('net.test');test.set({what='hello',value='world'})",
 			"test=require('net.test');test.get({what='hello',})",
 		}
-		cmd = 
+		-- cmd = randlist(cmds) 
+		cmd = socket.readstdin()
 		if cmd then
 			if cmd == "exit" then
 				return "exit"
@@ -119,7 +120,6 @@ function socketmgr.dispatch()
 			local func = load(cmd)	
 			local ok,result = pcall(func)
 			print(cmd,ok,result)
-			socket.usleep(5000000)
 		else
 			socket.usleep(100)
 		end

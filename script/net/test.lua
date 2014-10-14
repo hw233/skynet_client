@@ -46,6 +46,11 @@ function RESPONSE.handshake(srvname,args)
 end
 
 function RESPONSE.get(srvname,session,args)
+	pprintf("RESPONSE.get: %s",{
+		srvname = srvname,
+		session = session,
+		args = args,
+	})
 end
 
 return test
