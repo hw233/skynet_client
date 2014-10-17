@@ -80,7 +80,32 @@ function proto.init()
 	for protoname,netmod in pairs(net) do
 		proto.register(protoname)
 	end
-	pprintf("s2c:%s\nc2s:%s\nnet:%s",proto.s2c,proto.c2s,net)
+	local lineno
+	local b,e
+	print("s2c:")
+	lineno = 1
+	b = 1
+	while true do
+		e = string.find(proto.s2c,"\n",b)
+		if not e then
+			break
+		end
+		print(lineno,string.sub(proto.s2c,b,e-1))
+		b = e + 1
+		lineno = lineno + 1
+	end
+	print("c2s:")
+	lineno = 1
+	b = 1
+	while true do
+		e = string.find(proto.c2s,"\n",b)
+		if not e then
+			break
+		end
+		print(lineno,string.sub(proto.c2s,b,e-1))
+		b = e + 1
+		lineno = lineno + 1
+	end
 	proto.host = sproto.parse(proto.s2c):host "package"
 	proto.request = proto.host:attach(sproto.parse(proto.c2s))
 end

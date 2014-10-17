@@ -1,13 +1,13 @@
--- [1,100)
+-- [10000,10100)
 local proto = {}
 proto.c2s = [[
-test_handshake 1 {
+test_handshake 10000 {
 	response {
 		msg 0 : string
 	}
 }
 
-test_get 2 {
+test_get 10001 {
 	request {
 		what 0 : string
 	}
@@ -16,7 +16,7 @@ test_get 2 {
 	}
 }
 
-test_set 3 {
+test_set 10002 {
 	request {
 		what 0 : string
 		value 1 : string
@@ -25,7 +25,7 @@ test_set 3 {
 ]]
 
 proto.s2c = [[
-test_heartbeat 1 {
+test_heartbeat 10000 {
 }
 ]]
 

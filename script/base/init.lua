@@ -468,3 +468,9 @@ function isempty(t)
 	return next(t) == nil
 end
 
+
+-- package
+function sendpackage(srvname,protoname,cmd,args)
+	local socketmgr = require "socketmgr"
+	socketmgr.send_request(srvname,protoname,cmd,args)
+end

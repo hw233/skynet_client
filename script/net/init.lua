@@ -1,5 +1,8 @@
 local net = {
 	test = require "net.test",
-	test2 = require "net.test2",
+	login = require "net.login",
+	player = require "net.player",
+	msg = require "net.msg",
+	
 }
 return net
