@@ -41,7 +41,7 @@ login_login 3 {
 }
 
 
-login_entergame 3 {
+login_entergame 4 {
 	request {
 		roleid 0 : integer
 	}

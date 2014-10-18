@@ -20,11 +20,16 @@ function init()
 	print(io.read)
 	socketmgr.init()
 	while true do
-		local result = socketmgr.dispatch()
-		if result == "exit" then
-			print("client gameover")
-			break
+		local ok,result = pcall(socketmgr.dispatch)
+		if ok then
+			if result == "exit" then
+				print("client gameover")
+				break
+			end
+		else
+			print(result)
 		end
+		
 	end
 end
 

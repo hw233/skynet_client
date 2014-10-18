@@ -10,7 +10,7 @@ player_resource 200 {
 	}
 }
 
-player_switch = {
+player_switch 201 {
 	request {
 		gm 0 : boolean
 	}
