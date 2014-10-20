@@ -1,6 +1,11 @@
 -- [200,300)
 local proto = {}
 proto.c2s = [[
+player_gm 200 {
+	request {
+		cmd 0 : string
+	}
+}
 ]]
 
 proto.s2c = [[
@@ -21,7 +26,6 @@ player_switch 202 {
 		gm 0 : boolean
 	}
 }
-
 
 ]]
 
