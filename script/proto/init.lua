@@ -1,47 +1,50 @@
-require "base"
 local socket = require "clientsocket"
 local sproto = require "sproto"
-local net = require "net"
+require "script.base"
+local net = require "script.net"
 
 local proto = {}
 
 function proto.register(protoname)
-	local protomod = require("proto." .. protoname)
+	local protomod = require("script.proto." .. protoname)
 	proto.s2c = proto.s2c .. protomod.s2c
 	proto.c2s = proto.c2s .. protomod.c2s
 end
 
-local function request(cmd,args,response)
+local function request(cmd,request,response)
 	pprintf("REQUEST:%s",{
 		cmd = cmd,
-		args = args,
-		response = response,
+		request = request,
 	})
 	local protoname,cmd = string.match(cmd,"([^_]-)%_(.+)") 
 	local REQUEST = net[protoname].REQUEST
-	local func = assert(REQUEST[cmd],"unknow cmd:" .. protoname,"." .. cmd)
-	local r = func(srvname,args)
+	local func = assert(REQUEST[cmd],"unknow cmd:" .. protoname .. "." .. cmd)
+	local r = func(srvname,request)
+	pprintf("Response:%s",{
+		cmd = cmd,
+		response = r,
+	})
 	if response then
 		return response(r)
 	end
 end
 
-local function onresponse(srvname,session,args)
+local function onresponse(srvname,session,response)
 	pprintf("RESPONSE:%s",{
 		svrname = srvname,
 		session = session,
-		args = args,
+		response = response,
 	})
 	local srv = socketmgr.getsrv(srvname)
 	local ses = assert(srv.sessions[session],"error session id:%s" .. tostring(session))
+	srv.sessions[session] = nil
 	local callback = ses.onresponse
 	if not callback then
 		callback = net[ses.protoname].RESPONSE[ses.cmd]
 	end
 	if callback then
-		callback(srvname,session,args)
+		callback(srvname,ses.request,response)
 	end
-	srv.sessions[session] = nil
 end
 
 local function dispatch(srvname,typ,...)
@@ -61,25 +64,11 @@ local function dispatch(srvname,typ,...)
 end
 
 function proto.dispatch(srvname,v)
+	print(srvname,v)
 	dispatch(srvname,proto.host:dispatch(v))
 end
 
-function proto.init()
-	proto.s2c = [[
-.package {
-	type 0 : integer
-	session 1 : integer
-}
-]]
-	proto.c2s = [[
-.package {
-	type 0 : integer
-	session 1 : integer
-}
-]]
-	for protoname,netmod in pairs(net) do
-		proto.register(protoname)
-	end
+function proto.dump()
 	local lineno
 	local b,e
 	print("s2c:")
@@ -106,6 +95,27 @@ function proto.init()
 		b = e + 1
 		lineno = lineno + 1
 	end
+end
+
+function proto.init()
+	proto.s2c = [[
+.package {
+	type 0 : integer
+	session 1 : integer
+}
+]]
+	proto.c2s = [[
+.package {
+	type 0 : integer
+	session 1 : integer
+}
+]]
+	for protoname,netmod in pairs(net) do
+		if protoname ~= "init" then
+			proto.register(protoname)
+		end
+	end
+	proto.dump()
 	proto.host = sproto.parse(proto.s2c):host "package"
 	proto.request = proto.host:attach(sproto.parse(proto.c2s))
 end

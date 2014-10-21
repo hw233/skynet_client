@@ -1,4 +1,4 @@
-require "base"
+require "script.base"
 
 local login = {}
 -- s2c
@@ -8,8 +8,8 @@ login.REQUEST = REQUEST
 local RESPONSE = {}
 login.RESPONSE = RESPONSE
 
-function RESPONSE.register(srvname,session,args)
-	local result = assert(args.result)
+function RESPONSE.register(srvname,request,response)
+	local result = assert(response.result)
 	print("register",result)
 	if result == "200 Ok" then
 		
@@ -17,8 +17,8 @@ function RESPONSE.register(srvname,session,args)
 	end
 end
 
-function RESPONSE.login(srvname,session,args)
-	local result = assert(args.result)
+function RESPONSE.login(srvname,request,response)
+	local result = assert(response.result)
 	print("login",result)
 	if result == "200 Ok" then
 	elseif result == "202 Account nonexist" then
@@ -26,18 +26,22 @@ function RESPONSE.login(srvname,session,args)
 	end
 end
 
-function RESPONSE.createrole(srvname,session,args)
-	local result = assert(args.result)
+function RESPONSE.createrole(srvname,request,response)
+	local result = assert(response.result)
 	print("createrole",result)
 	if result == "200 Ok" then
+		local roles = assert(response.roles)
+		if #roles == 0 then
+			-- login.createrole(xxx)
+		end
 	elseif result == "301 Invalid roletype" then
 	elseif result == "302 Invalid name" then
 	end
 end
 
 
-function RESPONSE.entergame(srvname,session,args)
-	local result = assert(args.result)
+function RESPONSE.entergame(srvname,request,response)
+	local result = assert(response.result)
 	print("entergame",result)
 	if result == "200 Ok" then
 
@@ -45,20 +49,20 @@ function RESPONSE.entergame(srvname,session,args)
 end
 
 
-function login.register(srvname,args)
-	sendpackage(srvname,"login","register",args)
+function login.register(srvname,request)
+	sendpackage(srvname,"login","register",request)
 end
 
-function login.createrole(srvname,args)
-	sendpackage(srvname,"login","createrole",args)
+function login.createrole(srvname,request)
+	sendpackage(srvname,"login","createrole",request)
 end
 
-function login.login(srvname,args)
-	sendpackage(srvname,"login","login",args)
+function login.login(srvname,request)
+	sendpackage(srvname,"login","login",request)
 end
 
-function login.entergame(srvname,args)
-	sendpackage(srvname,"login","entergame",args)
+function login.entergame(srvname,request)
+	sendpackage(srvname,"login","entergame",reqeust)
 end
 
 return login

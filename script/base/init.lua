@@ -470,7 +470,7 @@ end
 
 
 -- package
-function sendpackage(srvname,protoname,cmd,args)
-	local socketmgr = require "socketmgr"
-	socketmgr.send_request(srvname,protoname,cmd,args)
+function sendpackage(srvname,protoname,cmd,args,onresponse)
+	local socketmgr = require "script.socketmgr"
+	socketmgr.send_request(srvname,protoname,cmd,args,onresponse)
 end

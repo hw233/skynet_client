@@ -15,10 +15,12 @@ login_register 1 {
 
 login_createrole 2 {
 	request {
-		roletype 0 : integer
-		name 1 : string
+		account 0 : string
+		roletype 1 : integer
+		name 2 : string
 	}
 	response {
+		# 200 Ok; 301 Invalid roletype; 302 Invalid name
 		result 0 : string
 	}
 }
@@ -26,7 +28,7 @@ login_createrole 2 {
 .roletype {
 		id 0 : integer
 		name 1 : string
-		shape 2 : integer
+		roletype 2 : integer
 }
 
 login_login 3 {
@@ -35,6 +37,7 @@ login_login 3 {
 		passwd 1 : string
 	}
 	response {
+		# 200 Ok; 202 Account nonexist; 203 Password error
 		result 0 : string
 		roles 1 : *roletype
 	}
@@ -46,6 +49,7 @@ login_entergame 4 {
 		roleid 0 : integer
 	}
 	response {
+		# 200 Ok
 		result 0 : string
 	}
 	

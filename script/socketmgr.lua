@@ -1,9 +1,10 @@
-require "base"
 local socket = require "clientsocket"
 local bit32 = require "bit32"
+require "script.base"
+local proto = require "script.proto"
 
 -- conf
-require "conf.srvlist"
+require "script.conf.srvlist"
 
 local socketmgr = {}
 
@@ -81,22 +82,28 @@ function socketmgr.send_package(srvname,pack)
 end
 
 
-function socketmgr.send_request(srvname,protoname,cmd,args,onresponse)
-	local proto = require "proto"
+function socketmgr.send_request(srvname,protoname,cmd,request,onresponse)
 	local srv = socketmgr.getsrv(srvname)
 	srv.session = srv.session + 1
+	pprintf("Request:%s",{
+		session = srv.session,
+		srvname = srvname,
+		protoname = protoname,
+		cmd = cmd,
+		request = request,
+		onresponse = onsresponse,
+	})
 	srv.sessions[srv.session] = {
 		protoname = protoname,
 		cmd = cmd,
-		args = args,
+		request = request,
 		onresponse = onresponse,
 	}
-	local str = proto.request(protoname .. "_" .. cmd,args,srv.session)
+	local str = proto.request(protoname .. "_" .. cmd,request,srv.session)
 	socketmgr.send_package(srvname,str)
 end
 
 function socketmgr.dispatch()
-	local proto = require "proto"
 	for srvname,srv in pairs(socketmgr.servers)	do
 		--print("srvname",srvname)
 		while true do
@@ -106,12 +113,6 @@ function socketmgr.dispatch()
 			end
 			proto.dispatch(srvname,v)
 		end
-		cmds = {
-			"test=require('net.test');test.handshake('gs')",
-			"test=require('net.test');test.set({what='hello',value='world'})",
-			"test=require('net.test');test.get({what='hello',})",
-		}
-		-- cmd = randlist(cmds) 
 		cmd = socket.readstdin()
 		if cmd then
 			if cmd == "exit" then
@@ -119,7 +120,9 @@ function socketmgr.dispatch()
 			end
 			local func = load(cmd)	
 			local ok,result = pcall(func)
-			print(cmd,ok,result)
+			if not ok then
+				print(result)
+			end
 		else
 			socket.usleep(100)
 		end

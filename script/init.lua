@@ -4,21 +4,18 @@ local cpaths = {
 }
 local paths = {
 	root .. "lualib/?.lua",
-	"script/?.lua",
-	"script/?/init.lua",
+	"./?.lua",
+	"./?/init.lua",
 }
 package.cpath = package.cpath ..";".. table.concat(cpaths,";")
 package.path = package.path .. ";" .. table.concat(paths,";")
 
-require "base"
-local proto = require "proto"
-local socketmgr = require "socketmgr"
+require "script.base"
+local net = require "script.net"
+local proto = require "script.proto"
+local socketmgr = require "script.socketmgr"
 
-function init()
-	print(io.read)	
-	proto.init()
-	print(io.read)
-	socketmgr.init()
+local function dispatch()
 	while true do
 		local ok,result = pcall(socketmgr.dispatch)
 		if ok then
@@ -31,6 +28,13 @@ function init()
 		end
 		
 	end
+end
+
+function init()
+	net.init()
+	proto.init()
+	socketmgr.init()
+	dispatch()
 end
 
 init()

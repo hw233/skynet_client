@@ -1,36 +1,18 @@
-require "base"
-socketmgr = require "socketmgr"
+require "script.base"
+socketmgr = require "script.socketmgr"
 
 local test = {}
 -- c2s
 function test.handshake(srvname)
-	pprintf("%s",{
-		direction = "c2s",
-		srvname = srvname,
-		cmd = "test.handshake",
-		args = nil,
-	})
 	socketmgr.send_request(srvname,"test","handshake")
 end
 
-function test.get(srvname,args)
-	pprintf("%s",{
-		direction = "c2s",
-		srvname = srvname,
-		cmd = "test.get",
-		args = args,
-	})
-	socketmgr.send_request(srvname,"test","get",args)
+function test.get(srvname,request)
+	socketmgr.send_request(srvname,"test","get",request)
 end
 
-function test.set(srvname,args)
-	pprintf("%s",{
-		direction = "c2s",
-		svrname = srvname,
-		cmd = "test.set",
-		args = args,
-	})
-	socketmgr.send_request(srvname,"test","set",args)
+function test.set(srvname,request)
+	socketmgr.send_request(srvname,"test","set",request)
 end
 
 
@@ -42,10 +24,10 @@ end
 
 local RESPONSE = {}
 test.RESPONSE = RESPONSE
-function RESPONSE.handshake(srvname,args)
+function RESPONSE.handshake(srvname,request,response)
 end
 
-function RESPONSE.get(srvname,session,args)
+function RESPONSE.get(srvname,request,response)
 end
 
 return test
