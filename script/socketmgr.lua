@@ -78,6 +78,7 @@ function socketmgr.send_package(srvname,pack)
 	local package = string.char(bit32.extract(size,8,8)) ..
 		string.char(bit32.extract(size,0,8)) ..
 		pack
+	print(string.format("size:%s,pack:%s",size,pack))
 	socket.send(fd,package)
 end
 

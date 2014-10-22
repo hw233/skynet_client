@@ -5,6 +5,10 @@ local login = {}
 local REQUEST = {}
 login.REQUEST = REQUEST
 
+function REQUEST.kick(srvname,request)
+
+end
+
 local RESPONSE = {}
 login.RESPONSE = RESPONSE
 

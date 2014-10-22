@@ -57,6 +57,11 @@ login_entergame 4 {
 ]]
 
 proto.s2c = [[
+login_kick 1 {
+	request {
+		reason 0 : string
+	}
+}
 ]]
 
 return proto

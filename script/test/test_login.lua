@@ -17,15 +17,15 @@ function test(srvname,account,passwd)
 				srvname = srvname,
 			},onregister)
 		elseif result == "200 Ok" then
-			local roles = response.roles
-			if not roles or #roles == 0 then
+			local roles = assert(response.roles)
+			if #roles == 0 then
 				sendpackage(srvname,"login","createrole",{
 					account = account,
 					roletype = 1001,
 					name = account,
 				},oncreaterole)
 			else
-				local role = roles[1]
+				local role = assert(roles[1],"no role")
 				sendpackage(srvname,"login","entergame",{
 					roleid = role.id,	
 				})
