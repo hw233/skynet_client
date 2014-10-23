@@ -8,9 +8,15 @@ login_register 1 {
 		srvname 2 : string
 	}
 	response {
-		# 200 Ok; 201 Account exist;
+		# 200 Ok; 201 Account exist; 204 Invalid account format; 205 Invalid password format
 		result 0 : string
 	}
+}
+
+.roletype {
+		pid 0 : integer
+		name 1 : string
+		roletype 2 : integer
 }
 
 login_createrole 2 {
@@ -22,14 +28,11 @@ login_createrole 2 {
 	response {
 		# 200 Ok; 301 Invalid roletype; 302 Invalid name
 		result 0 : string
+		newrole 1 : roletype
 	}
 }
 
-.roletype {
-		id 0 : integer
-		name 1 : string
-		roletype 2 : integer
-}
+
 
 login_login 3 {
 	request {

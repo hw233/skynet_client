@@ -34,10 +34,7 @@ function RESPONSE.createrole(srvname,request,response)
 	local result = assert(response.result)
 	print("createrole",result)
 	if result == "200 Ok" then
-		local roles = assert(response.roles)
-		if #roles == 0 then
-			-- login.createrole(xxx)
-		end
+		local role = assert(response.newrole)
 	elseif result == "301 Invalid roletype" then
 	elseif result == "302 Invalid name" then
 	end

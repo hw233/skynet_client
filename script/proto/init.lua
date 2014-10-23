@@ -12,7 +12,7 @@ function proto.register(protoname)
 end
 
 local function request(cmd,request,response)
-	pprintf("REQUEST:%s",{
+	pprintf("REQUEST:%s\n",{
 		cmd = cmd,
 		request = request,
 	})
@@ -20,7 +20,7 @@ local function request(cmd,request,response)
 	local REQUEST = net[protoname].REQUEST
 	local func = assert(REQUEST[cmd],"unknow cmd:" .. protoname .. "." .. cmd)
 	local r = func(srvname,request)
-	pprintf("Response:%s",{
+	pprintf("Response:%s\n",{
 		cmd = cmd,
 		response = r,
 	})
@@ -30,7 +30,7 @@ local function request(cmd,request,response)
 end
 
 local function onresponse(srvname,session,response)
-	pprintf("RESPONSE:%s",{
+	pprintf("RESPONSE:%s\n",{
 		svrname = srvname,
 		session = session,
 		response = response,

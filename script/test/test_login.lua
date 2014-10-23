@@ -27,8 +27,8 @@ function test(srvname,account,passwd)
 			else
 				local role = assert(roles[1],"no role")
 				sendpackage(srvname,"login","entergame",{
-					roleid = role.id,	
-				})
+					roleid = role.pid,	
+				},onentergame)
 			end
 			
 		end
@@ -50,11 +50,10 @@ function test(srvname,account,passwd)
 		local result = assert(response.result)
 		print("createrole:",result) 
 		if result == "200 Ok" then
-			sendpackage(srvname,"login","login",{
-				account = account,
-				passwd = passwd,
-				srvname = srvname,
-			},onlogin)
+			local role = assert(response.newrole)
+			sendpackage(srvname,"login","entergame",{
+				roleid = role.pid,
+			},onentergame)
 		end
 	end
 

@@ -86,7 +86,7 @@ end
 function socketmgr.send_request(srvname,protoname,cmd,request,onresponse)
 	local srv = socketmgr.getsrv(srvname)
 	srv.session = srv.session + 1
-	pprintf("Request:%s",{
+	pprintf("Request:%s\n",{
 		session = srv.session,
 		srvname = srvname,
 		protoname = protoname,
