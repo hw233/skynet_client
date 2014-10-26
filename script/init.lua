@@ -11,9 +11,10 @@ package.cpath = package.cpath ..";".. table.concat(cpaths,";")
 package.path = package.path .. ";" .. table.concat(paths,";")
 
 require "script.base"
-local net = require "script.net"
-local proto = require "script.proto"
-local socketmgr = require "script.socketmgr"
+require "script.net"
+require "script.proto"
+require "script.socketmgr"
+require "script.logger"
 
 local function dispatch()
 	while true do
@@ -31,6 +32,7 @@ local function dispatch()
 end
 
 function init()
+	logger.init()
 	net.init()
 	proto.init()
 	socketmgr.init()

@@ -1,16 +1,16 @@
 require "script.base"
 
-local login = {}
+net_login = net_login or {}
 -- s2c
 local REQUEST = {}
-login.REQUEST = REQUEST
+net_login.REQUEST = REQUEST
 
 function REQUEST.kick(srvname,request)
 
 end
 
 local RESPONSE = {}
-login.RESPONSE = RESPONSE
+net_login.RESPONSE = RESPONSE
 
 function RESPONSE.register(srvname,request,response)
 	local result = assert(response.result)
@@ -50,20 +50,21 @@ function RESPONSE.entergame(srvname,request,response)
 end
 
 
-function login.register(srvname,request)
+function net_login.register(srvname,request)
 	sendpackage(srvname,"login","register",request)
 end
 
-function login.createrole(srvname,request)
+function net_login.createrole(srvname,request)
 	sendpackage(srvname,"login","createrole",request)
 end
 
-function login.login(srvname,request)
+function net_login.login(srvname,request)
 	sendpackage(srvname,"login","login",request)
 end
 
-function login.entergame(srvname,request)
+function net_login.entergame(srvname,request)
 	sendpackage(srvname,"login","entergame",reqeust)
+	print ">>>>>>>>>>>entergame"
 end
 
-return login
+return net_login

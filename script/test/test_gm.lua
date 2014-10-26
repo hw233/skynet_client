@@ -1,7 +1,7 @@
 require "script.base"
-local login = require "script.test.test_login"
+require "script.test.test_login"
 
-function test()
+local function test()
 	login("gs","robert1","123")	
 	login("gs","robert2","123")
 end

@@ -1,12 +1,11 @@
 package.path = "skynet/lualib/?.lua;./?.lua;./?/init.lua"
 package.cpath = "skynet/luaclib/?.so"
 
-local socket = require "clientsocket"
-local net = require "script.base"
+require "script.base"
 require "script.conf.srvlist"
-local socketmgr = require "script.socketmgr"
+require "script.socketmgr"
 
-function test(srvname,account,passwd)
+local function test(srvname,account,passwd)
 	function onlogin(srvname,request,response)
 		local result = assert(response.result)	
 		pprintf("login:%s,roles:%s",result,response.roles)

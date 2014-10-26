@@ -1,12 +1,12 @@
 local socket = require "clientsocket"
 local bit32 = require "bit32"
 require "script.base"
-local proto = require "script.proto"
+require "script.proto"
 
 -- conf
 require "script.conf.srvlist"
 
-local socketmgr = {}
+socketmgr = socketmgr or {}
 
 function socketmgr.init()
 	socketmgr.servers = {}

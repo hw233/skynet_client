@@ -462,15 +462,9 @@ function currentdir()
 	return path
 end
 
---table
-function isempty(t)
-	assert(type(t) == "table")
-	return next(t) == nil
-end
-
 
 -- package
 function sendpackage(srvname,protoname,cmd,args,onresponse)
-	local socketmgr = require "script.socketmgr"
+	require "script.socketmgr"
 	socketmgr.send_request(srvname,protoname,cmd,args,onresponse)
 end

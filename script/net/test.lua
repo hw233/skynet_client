@@ -1,33 +1,33 @@
 require "script.base"
-socketmgr = require "script.socketmgr"
+require "script.socketmgr"
 
-local test = {}
+net_test = net_test or {}
 -- c2s
-function test.handshake(srvname)
+function net_test.handshake(srvname)
 	socketmgr.send_request(srvname,"test","handshake")
 end
 
-function test.get(srvname,request)
+function net_test.get(srvname,request)
 	socketmgr.send_request(srvname,"test","get",request)
 end
 
-function test.set(srvname,request)
+function net_test.set(srvname,request)
 	socketmgr.send_request(srvname,"test","set",request)
 end
 
 
 -- s2c
 local REQUEST = {} 
-test.REQUEST = REQUEST
+net_test.REQUEST = REQUEST
 function REQUEST.heartbeat(srvname)
 end
 
 local RESPONSE = {}
-test.RESPONSE = RESPONSE
+net_test.RESPONSE = RESPONSE
 function RESPONSE.handshake(srvname,request,response)
 end
 
 function RESPONSE.get(srvname,request,response)
 end
 
-return test
+return net_test

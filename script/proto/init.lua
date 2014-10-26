@@ -1,9 +1,9 @@
 local socket = require "clientsocket"
 local sproto = require "sproto"
 require "script.base"
-local net = require "script.net"
+require "script.net"
 
-local proto = {}
+proto = proto or {}
 
 function proto.register(protoname)
 	local protomod = require("script.proto." .. protoname)

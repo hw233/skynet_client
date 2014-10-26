@@ -1,4 +1,4 @@
-local net = {}
+net = net or {}
 
 function net.init()
 	net.test = require "script.net.test"
