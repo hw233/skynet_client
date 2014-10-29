@@ -55,7 +55,9 @@ login_entergame 4 {
 		# 200 Ok
 		result 0 : string
 	}
-	
+}
+
+login_exitgame 5 {
 }
 ]]
 

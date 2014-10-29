@@ -1,10 +1,10 @@
 require "script.base"
 
-net_player = net_player or {}
+netplayer = netplayer or {}
 
 -- s2c
 local REQUEST = {}
-net_player.REQUEST = REQUEST
+netplayer.REQUEST = REQUEST
 
 function REQUEST.heartbeat(srvname,request)
 end
@@ -16,6 +16,6 @@ function REQUEST.switch(srvname,request)
 end
 
 local RESPONSE = {}
-net_player.RESPONSE = RESPONSE
+netplayer.RESPONSE = RESPONSE
 
-return net_player
+return netplayer

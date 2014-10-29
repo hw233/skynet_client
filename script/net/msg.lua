@@ -1,9 +1,9 @@
 require "script.base"
-net_msg = net_msg or {}
+netmsg = netmsg or {}
 
 -- s2c
 local REQUEST = {}
-net_msg.REQUEST = REQUEST
+netmsg.REQUEST = REQUEST
 
 function REQUEST.notify(srvname,request)
 end
@@ -12,6 +12,6 @@ function REQUEST.messagebox(srvname,request)
 end
 
 local RESPONSE = {}
-net_msg.RESPONSE = RESPONSE
+netmsg.RESPONSE = RESPONSE
 
-return net_msg
+return netmsg
