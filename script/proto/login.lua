@@ -26,7 +26,7 @@ login_createrole 2 {
 		name 2 : string
 	}
 	response {
-		# 200 Ok; 301 Invalid roletype; 302 Invalid name
+		# 200 Ok; 301 Invalid roletype; 302 Invalid name; 303 Over limit
 		result 0 : string
 		newrole 1 : roletype
 	}
