@@ -30,11 +30,8 @@ friend_sendmsg 304 {
 		pid 0 : integer
 		msg 1 : string
 	}
-	response {
-		# 0 Ok; 1 Not online
-		result 0 : string
-	}
 }
+
 
 ]]
 
