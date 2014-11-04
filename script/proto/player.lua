@@ -6,6 +6,12 @@ player_gm 200 {
 		cmd 0 : string
 	}
 }
+
+player_enter 201 {
+	request {
+		what 0 : string
+	}
+}
 ]]
 
 proto.s2c = [[

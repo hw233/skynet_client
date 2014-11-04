@@ -5,14 +5,20 @@ card_updatecardtable 400 {
 	request {
 		id 0 : integer
 		roletype 1: integer
+		# card sid array
 		cards 2 : *integer
 		mode 3 : integer 
+	}
+	response {
+		# 0--Ok; other--not enough card sid
+		result 0 : integer
 	}
 }
 
 card_delcardtable 401 {
 	request {
 		id 0 : integer
+		mode : integer
 	}
 }
 
