@@ -1,0 +1,50 @@
+-- [400,500)
+local proto = {}
+proto.c2s = [[
+card_updatecardtable 400 {
+	request {
+		id 0 : integer
+		roletype 1: integer
+		cards 2 : *integer
+		mode 3 : integer 
+	}
+}
+
+card_delcardtable 401 {
+	request {
+		id 0 : integer
+	}
+}
+
+card_compose 402 {
+	request {
+		cardid 0 : integer
+	}
+}
+
+card_decompose 403 {
+	request {
+		cardid 0 : integer
+	}
+}
+
+card_decomposeleft 404 {
+}
+]]
+
+proto.s2c = [[
+card_addcard 400 {
+	request {
+		cardid 0 : integer
+		sid 1 : integer
+	}
+}
+
+card_delcard 401 {
+	request {
+		cardid 0 : integer
+	}
+}
+]]
+
+return proto
