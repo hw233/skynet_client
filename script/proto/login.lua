@@ -13,7 +13,7 @@ login_register 1 {
 	}
 }
 
-.roletype {
+.RoleType {
 		pid 0 : integer
 		name 1 : string
 		roletype 2 : integer
@@ -28,7 +28,7 @@ login_createrole 2 {
 	response {
 		# 200 Ok; 301 Invalid roletype; 302 Invalid name; 303 Over limit
 		result 0 : string
-		newrole 1 : roletype
+		newrole 1 : RoleType
 	}
 }
 
@@ -42,7 +42,7 @@ login_login 3 {
 	response {
 		# 200 Ok; 202 Account nonexist; 203 Password error
 		result 0 : string
-		roles 1 : *roletype
+		roles 1 : *RoleType
 	}
 }
 

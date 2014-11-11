@@ -4,7 +4,7 @@ proto.c2s = [[
 card_updatecardtable 400 {
 	request {
 		id 0 : integer
-		roletype 1: integer
+		race 1: integer
 		# card sid array
 		cards 2 : *integer
 		mode 3 : integer 
