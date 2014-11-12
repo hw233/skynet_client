@@ -3,14 +3,17 @@ local proto = {}
 proto.c2s = [[
 war_selectcardtable 500 {
 	request {
-		cardtableid 0 : integer
 		# fight; arena; entertainment
-		type 1 : string
+		type 0 : string
+		cardtableid 1 : integer
+		
 	}
 }
 
 war_search_opponent 501 {
 	request {
+		# fight; arena; entertainment
+		type 0 : string
 	}
 }
 
@@ -30,6 +33,19 @@ war_playcard 503 {
 
 war_endround 504 {
 	request {
+	}
+}
+
+war_heroattack 505 {
+	request {
+		targetid 0 : integer
+	}
+}
+
+war_footmanattack 506 {
+	request {
+		warcardid 0 : integer
+		targetid 1 : integer
 	}
 }
 ]]
@@ -91,12 +107,12 @@ war_refreshwar 501 {
 war_warresult 502 {
 	request {
 		warid 0 : integer
-		iswin 1 : boolean
+		result 1 : integer
 	}
 }
-war_startround 503 {
+war_beginround 503 {
 	request {
-		round 0 : integer
+		roundcnt 0 : integer
 	}
 }
 

@@ -18,10 +18,13 @@ end
 function REQUEST.warresult(srvname,request)
 end
 
-function REQUEST.startround(srvname,request)
+function REQUEST.beginround(srvname,request)
 end
 
 function REQUEST.matchplayer(srvname,request)
+end
+
+function REQUEST.random_handcard(srvname,request)
 end
 
 local RESPONSE = {}
