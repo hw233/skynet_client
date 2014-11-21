@@ -35,6 +35,15 @@ function socketmgr.delsrv(srvname)
 	socketmgr.servers[srvname] = nil
 end
 
+function socketmgr.close(srvname) 
+	local srv = socketmgr.getsrv(srvname)
+	if srv then
+		socketmgr.delsrv(srvname)
+		os.exit()
+		--socket.close(srv.fd)
+	end
+end
+
 function socketmgr.onclose(srvname)
 	local srv = assert(socketmgr.servers[srvname])
 	socketmgr.delsrv(srvname)

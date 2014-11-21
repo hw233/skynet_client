@@ -52,7 +52,7 @@ login_entergame 4 {
 		roleid 0 : integer
 	}
 	response {
-		# 200 Ok
+		# 200 Ok; 401 Repeat login;
 		result 0 : string
 	}
 }

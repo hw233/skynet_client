@@ -1,4 +1,5 @@
 require "script.base"
+require "script.socketmgr"
 
 netlogin = netlogin or {}
 -- s2c
@@ -6,8 +7,10 @@ local REQUEST = {}
 netlogin.REQUEST = REQUEST
 
 function REQUEST.kick(srvname,request)
-
+	print("close",srvname)
+	socketmgr.close(srvname)	
 end
+
 
 local RESPONSE = {}
 netlogin.RESPONSE = RESPONSE

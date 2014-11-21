@@ -134,6 +134,53 @@ war_matchplayer 505 {
 		isattacker 6 : boolean
 	}
 }
+
+.BuffType {
+	addmaxhp 0 : integer
+	addatk 1 : integer
+	addcrystalcost 2 : integer
+	setmaxhp 3 : integer
+	setatk 4 : integer
+	setcrystalcost 5 : integer
+	mincrystalcost 6 : integer
+}
+
+.HaloType {
+	addmaxhp 0 : integer
+	addatk 1 : integer
+	addcrystalcost 2 : integer
+	setmaxhp 3 : integer
+	setatk 4 : integer
+	setcrystalcost 5 : integer
+	mincrystalcost 6 : integer
+}
+
+.StateType {
+	assault 0 : integer
+	sneer 1 : integer
+	shield 2 : integer
+	magic_immune 3 : integer
+	freeze 4 : integer
+	enrage 5 : boolean
+}
+
+.DataType {
+	id 0 : integer
+	hp 1 : integer
+	atk 2 : integer
+	crystalcost 3 : integer
+	leftatkcnt 4 : integer
+	atkcnt 5 : integer
+	buffs 6 : *BuffType
+	halos 7 : *HaloType
+	state 8 : StateType
+}
+
+war_sync 506 {
+	request {
+		data 0 : *DataType
+	}
+}
 ]]
 
 return proto

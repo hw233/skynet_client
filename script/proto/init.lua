@@ -11,7 +11,7 @@ function proto.register(protoname)
 	proto.c2s = proto.c2s .. protomod.c2s
 end
 
-local function request(cmd,request,response)
+local function request(srvname,cmd,request,response)
 	pprintf("REQUEST:%s\n",{
 		cmd = cmd,
 		request = request,
@@ -49,7 +49,7 @@ end
 
 local function dispatch(srvname,typ,...)
 	if typ == "REQUEST" then
-		local ok,result = pcall(request,...)	
+		local ok,result = pcall(request,srvname,...)	
 		if ok then
 			if result then
 				socketmgr.send_package(srvname,result)
