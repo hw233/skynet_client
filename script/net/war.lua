@@ -21,10 +21,14 @@ end
 function REQUEST.beginround(srvname,request)
 end
 
+function REQUEST.random_handcard(srvname,request)
+end
+
 function REQUEST.matchplayer(srvname,request)
 end
 
-function REQUEST.random_handcard(srvname,request)
+function REQUEST.sync(srvname,request)
+	
 end
 
 local RESPONSE = {}

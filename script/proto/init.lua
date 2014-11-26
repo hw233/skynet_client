@@ -2,6 +2,7 @@ local socket = require "clientsocket"
 local sproto = require "sproto"
 require "script.base"
 require "script.net"
+require "script.socketmgr"
 
 proto = proto or {}
 
@@ -16,6 +17,10 @@ local function request(srvname,cmd,request,response)
 		cmd = cmd,
 		request = request,
 	})
+	-- test(buff net data)
+	local srv = socketmgr.getsrv(srvname)
+	srv.netbuff[cmd] = request
+
 	local protoname,cmd = string.match(cmd,"([^_]-)%_(.+)") 
 	local REQUEST = net[protoname].REQUEST
 	local func = assert(REQUEST[cmd],"unknow cmd:" .. protoname .. "." .. cmd)

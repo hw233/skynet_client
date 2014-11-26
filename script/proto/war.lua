@@ -33,21 +33,23 @@ war_playcard 503 {
 
 war_endround 504 {
 	request {
+		roundcnt 0 : integer
 	}
 }
 
-war_heroattack 505 {
+war_launchattack 505 {
+	request {
+		attackerid 0 : integer
+		defenserid 1 : integer
+	}
+}
+
+war_hero_useskill 506 {
 	request {
 		targetid 0 : integer
 	}
 }
 
-war_footmanattack 506 {
-	request {
-		warcardid 0 : integer
-		targetid 1 : integer
-	}
-}
 ]]
 
 proto.s2c = [[
@@ -138,21 +140,16 @@ war_matchplayer 505 {
 .BuffType {
 	addmaxhp 0 : integer
 	addatk 1 : integer
-	addcrystalcost 2 : integer
-	setmaxhp 3 : integer
-	setatk 4 : integer
-	setcrystalcost 5 : integer
-	mincrystalcost 6 : integer
+	setmaxhp 2 : integer
+	setatk 3 : integer
 }
 
 .HaloType {
 	addmaxhp 0 : integer
 	addatk 1 : integer
 	addcrystalcost 2 : integer
-	setmaxhp 3 : integer
-	setatk 4 : integer
-	setcrystalcost 5 : integer
-	mincrystalcost 6 : integer
+	setcrystalcost 3 : integer
+	mincrystalcost 4 : integer
 }
 
 .StateType {
@@ -164,21 +161,73 @@ war_matchplayer 505 {
 	enrage 5 : boolean
 }
 
-.DataType {
+.WarCardType {
 	id 0 : integer
-	hp 1 : integer
+	maxhp 1 : integer
 	atk 2 : integer
-	crystalcost 3 : integer
-	leftatkcnt 4 : integer
-	atkcnt 5 : integer
-	buffs 6 : *BuffType
-	halos 7 : *HaloType
-	state 8 : StateType
+	hp 3 : integer
+	atkcnt 4 : integer
+	leftatkcnt 5 : integer
+	state 6 : StateType
+}
+
+.WeaponType {
+	sid 0 : integer
+	usecnt 1 : integer
+}
+
+
+.ArgType {
+	id 0 : integer
+	pos 1 : integer
+	warcard 2 : WarCardType
+	attacker 3 : integer
+	defenser 4 : integer
+	sid 5 : integer
+	value 6 : integer
+	buff 7 : BuffType
+	halo 8 : HaloType
+	state 9 : string
+	weapon 10 : WeaponType
+	targetid 11 : integer
+	
+}
+
+# addbuff {buff=BuffType}
+# delbuff {id=integer}
+# addhalo {halo=HaloType}
+# delhalo {id=integer}
+# setmaxhp {value=integer}
+# setatk {value=integer}
+# setcrystalcost {value=integer}
+# sethp {value=integer}
+# silence {pos=integer}
+# syncard {warcard=WarCardType}
+# delweapon {sid=integer}
+# equipweapon {weapon=WeaponType}
+# setweaponusecnt {value=integer}
+# useskill {id=integer}
+# addfootman {pos=integer,warcard=WarCardType}
+# delfootman {id=integer}
+# playcard {id=integer,pos=integer,targetid=integer}
+# footman_attack_footman {id=integer,targetid=integer}
+# footman_attack_hero {id=integer,targetid=integer}
+# hero_attack_footman {id=integer,targetid=integer}
+# hero_attack_hero {id=integer,targetid=integer}
+# putinhand {id=integer,sid=integer}
+# removefromhand {id=integer}
+# addsecret {id=integer}
+# delsecret {id=integer}
+
+.CmdType {
+	id 0 : integer
+	cmd 1 : string
+	args 2 : ArgType
 }
 
 war_sync 506 {
 	request {
-		data 0 : *DataType
+		cmds 0 : *CmdType
 	}
 }
 ]]

@@ -25,6 +25,7 @@ function socketmgr.getsrv(srvname)
 			sessions = {},
 			srvname = srvname,
 			last = "",
+			netbuff = {},
 		}
 		socketmgr.servers[srvname] = tmp
 	end
