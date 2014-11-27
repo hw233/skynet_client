@@ -37,6 +37,13 @@ function cplayer:getobject(pid)
 	return self.enemy
 end
 
+function cplayer:ishero(id)
+	if id == 100 or id == 300 then
+		return true
+	end
+	return false
+end
+
 __player = nil
 
 function getplayer()

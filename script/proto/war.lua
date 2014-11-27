@@ -19,8 +19,8 @@ war_search_opponent 501 {
 
 war_confirm_handcard 502 {
 	request {
-		# 战斗卡牌SID列表
-		cardsids 0 : *integer
+		# 放弃的手牌
+		poslist 0 : *integer
 	}
 }
 
@@ -51,11 +51,14 @@ war_hero_useskill 506 {
 	}
 }
 
+war_giveupwar 507 {
+	request {
+	}
+}
+
 ]]
 
 proto.s2c = [[
-
-
 war_startwar 500 {
 	request {
 		warid 0 : integer
@@ -81,13 +84,7 @@ war_endround 503 {
 	}
 }
 
-war_random_handcard 504 {
-	request {
-		cardsids 0 : *integer
-	}
-}
-
-war_matchplayer 505 {
+war_matchplayer 504 {
 	request {
 		pid 0 : integer
 		race 1 : integer
@@ -191,7 +188,7 @@ war_matchplayer 505 {
 # footman_attack_hero {id=integer,targetid=integer}
 # hero_attack_footman {id=integer,targetid=integer}
 # hero_attack_hero {id=integer,targetid=integer}
-# putinhand {id=integer,sid=integer}
+# putinhand {id=integer,sid=integer,pos=integer}
 # removefromhand {id=integer}
 # addsecret {id=integer}
 # delsecret {id=integer}
@@ -199,6 +196,8 @@ war_matchplayer 505 {
 # set_empty_crystal {value=integer}
 # setstate {id=integer,state=string,value=integer}
 # delstate {id=integer,state=string}
+# puttocardlib {id=integer}
+# destroycard {sid=integer}
 
 .CmdType {
 	pid 0 : integer
@@ -206,7 +205,7 @@ war_matchplayer 505 {
 	args 2 : ArgType
 }
 
-war_sync 506 {
+war_sync 505 {
 	request {
 		cmds 0 : *CmdType
 	}
