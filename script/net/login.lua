@@ -1,5 +1,6 @@
 require "script.base"
 require "script.socketmgr"
+require "script.player"
 
 netlogin = netlogin or {}
 -- s2c
@@ -18,8 +19,11 @@ netlogin.RESPONSE = RESPONSE
 function RESPONSE.register(srvname,request,response)
 	local result = assert(response.result)
 	print("register",result)
+	local player = getplayer()
 	if result == "200 Ok" then
-		
+		player:set("account",request.account)	
+		player:set("passwd",request.passwd)
+		player:set("srvname",request.srvname)
 	elseif result == "201 Account exist" then
 	end
 end
@@ -27,7 +31,10 @@ end
 function RESPONSE.login(srvname,request,response)
 	local result = assert(response.result)
 	print("login",result)
+	local player = getplayer()
 	if result == "200 Ok" then
+		player:set("account",request.account)	
+		player:set("passwd",request.passwd)
 	elseif result == "202 Account nonexist" then
 	elseif result == "203 Password error" then
 	end
@@ -36,8 +43,10 @@ end
 function RESPONSE.createrole(srvname,request,response)
 	local result = assert(response.result)
 	print("createrole",result)
+	local player = getplayer()
 	if result == "200 Ok" then
-		local role = assert(response.newrole)
+		local roleid = assert(response.newrole)
+		player:set("pid",roleid)
 	elseif result == "301 Invalid roletype" then
 	elseif result == "302 Invalid name" then
 	end
@@ -47,8 +56,9 @@ end
 function RESPONSE.entergame(srvname,request,response)
 	local result = assert(response.result)
 	print("entergame",result)
+	local player = getplayer()
 	if result == "200 Ok" then
-
+		player:set("pid",request.roleid)
 	end
 end
 

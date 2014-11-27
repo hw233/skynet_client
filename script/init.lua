@@ -15,6 +15,7 @@ require "script.net"
 require "script.proto"
 require "script.socketmgr"
 require "script.logger"
+require "script.player"
 
 local function dispatch()
 	while true do
@@ -36,6 +37,7 @@ function init()
 	net.init()
 	proto.init()
 	socketmgr.init()
+	getplayer() -- create a player
 	dispatch()
 end
 

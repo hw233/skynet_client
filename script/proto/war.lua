@@ -27,7 +27,8 @@ war_confirm_handcard 502 {
 war_playcard 503 {
 	request {
 		cardid 0 : integer
-		targetid 1 : integer
+		pos 1 : integer
+		targetid 2 : integer
 	}
 }
 
@@ -54,43 +55,6 @@ war_hero_useskill 506 {
 
 proto.s2c = [[
 
-.Weapon {
-	atk 0 : integer
-	validcnt 1 : integer
-}
-
-.State {
-	freeze 0 : integer
-	sneer 1 : integer
-}
-
-.Buf {
-	addhp 0 : integer
-	addatk 1 : integer
-	addcrystal 2 : integer
-	sethp 3 : integer
-	setatk 4 : integer
-	setcrystal 5 : integer
-}
-
-.CardData {
-	cardid 0 : integer
-	sid 1 : integer
-	hp 2 : integer
-	atk 3 : integer
-	state 4 : State
-	buf 5 : Buf
-}
-
-
-.Hero {
-	hp 0 : integer
-	atk 1 : integer
-	crystal 2 : integer
-	empty_crystal 3 : integer
-	weapon 4 : Weapon
-	state 5 : State
-}
 
 war_startwar 500 {
 	request {
@@ -98,21 +62,20 @@ war_startwar 500 {
 	}
 }
 
-war_refreshwar 501 {
-	request {
-		self 0 : Hero
-		enemy 1 : Hero
-		carddatas 2 : *CardData
-	}
-}
 
-war_warresult 502 {
+war_warresult 501 {
 	request {
 		warid 0 : integer
 		result 1 : integer
 	}
 }
-war_beginround 503 {
+war_beginround 502 {
+	request {
+		roundcnt 0 : integer
+	}
+}
+
+war_endround 503 {
 	request {
 		roundcnt 0 : integer
 	}
@@ -138,18 +101,30 @@ war_matchplayer 505 {
 }
 
 .BuffType {
-	addmaxhp 0 : integer
-	addatk 1 : integer
-	setmaxhp 2 : integer
-	setatk 3 : integer
+	srcid 0 : integer	# 来源卡片ID
+	srcsid 1 : integer	# 来源卡片SID
+	.Buff {
+		addmaxhp 0 : integer
+		addatk 1 : integer
+		setmaxhp 2 : integer
+		setatk 3 : integer
+		lifecircle 4 : integer
+	}
+	value 2 : Buff
 }
 
 .HaloType {
-	addmaxhp 0 : integer
-	addatk 1 : integer
-	addcrystalcost 2 : integer
-	setcrystalcost 3 : integer
-	mincrystalcost 4 : integer
+	srcid 0 : integer	# 来源卡片ID
+	srcsid 1 : integer	# 来源卡片SID
+	.Halo {
+		addmaxhp 0 : integer
+		addatk 1 : integer
+		addcrystalcost 2 : integer
+		setcrystalcost 3 : integer
+		mincrystalcost 4 : integer
+		lifecircle 5 : integer
+	}
+	value 2 : Halo
 }
 
 .StateType {
@@ -169,11 +144,13 @@ war_matchplayer 505 {
 	atkcnt 4 : integer
 	leftatkcnt 5 : integer
 	state 6 : StateType
+	sid 7 : integer
 }
 
 .WeaponType {
 	sid 0 : integer
-	usecnt 1 : integer
+	atk 1 : integer
+	usecnt 2 : integer
 }
 
 
@@ -190,23 +167,23 @@ war_matchplayer 505 {
 	state 9 : string
 	weapon 10 : WeaponType
 	targetid 11 : integer
-	
+	srcid 12 : integer
 }
 
-# addbuff {buff=BuffType}
-# delbuff {id=integer}
-# addhalo {halo=HaloType}
-# delhalo {id=integer}
-# setmaxhp {value=integer}
-# setatk {value=integer}
-# setcrystalcost {value=integer}
-# sethp {value=integer}
-# silence {pos=integer}
+# addbuff {id=integer,buff=BuffType}
+# delbuff {id=integer,srcid=integer}
+# addhalo {id=integer,halo=HaloType}
+# delhalo {id=integer,srcid=integer}
+# setmaxhp {id=integer,value=integer}
+# setatk {id=integer,value=integer}
+# setcrystalcost {id=integer,value=integer}
+# sethp {id=integer,value=integer}
+# silence {id=integer,pos=integer}
 # syncard {warcard=WarCardType}
-# delweapon {sid=integer}
-# equipweapon {weapon=WeaponType}
-# setweaponusecnt {value=integer}
-# useskill {id=integer}
+# delweapon {id=integer}
+# equipweapon {id=integer,weapon=WeaponType}
+# setweaponusecnt {id=integer,value=integer}
+# useskill {id=integer,targetid=integer}
 # addfootman {pos=integer,warcard=WarCardType}
 # delfootman {id=integer}
 # playcard {id=integer,pos=integer,targetid=integer}
@@ -218,9 +195,13 @@ war_matchplayer 505 {
 # removefromhand {id=integer}
 # addsecret {id=integer}
 # delsecret {id=integer}
+# setcrystal {value=integer}
+# set_empty_crystal {value=integer}
+# setstate {id=integer,state=string,value=integer}
+# delstate {id=integer,state=string}
 
 .CmdType {
-	id 0 : integer
+	pid 0 : integer
 	cmd 1 : string
 	args 2 : ArgType
 }

@@ -2,7 +2,6 @@ local socket = require "clientsocket"
 local sproto = require "sproto"
 require "script.base"
 require "script.net"
-require "script.socketmgr"
 
 proto = proto or {}
 
@@ -18,6 +17,7 @@ local function request(srvname,cmd,request,response)
 		request = request,
 	})
 	-- test(buff net data)
+	require "script.socketmgr"
 	local srv = socketmgr.getsrv(srvname)
 	srv.netbuff[cmd] = request
 
