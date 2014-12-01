@@ -11,7 +11,9 @@ netwar = netwar or {}
 local REQUEST = {} 
 netwar.REQUEST = REQUEST
 function REQUEST.startwar(srvname,request)
-
+	player:delete("hero")
+	player:delete("handcards")
+	player:delete("footman")
 end
 
 
@@ -50,7 +52,7 @@ function REQUEST.sync(srvname,request)
 		local pid,cmd,args = cmd.pid,cmd.cmd,cmd.args
 		local func = assert(CMD[cmd],"Invalid war cmd:" .. tostring(cmd))
 		--func(srvname,pid,args)
-		xpcall(func,srvname,pid,args,onerror)
+		xpcall(func,onerror,srvname,pid,args)
 	end
 end
 
@@ -152,6 +154,7 @@ function CMD.hero_attack_footman(srvname,pid,args)
 end
 function CMD.hero_attack_hero(srvname,pid,args)
 end
+
 function CMD.putinhand(srvname,pid,args)
 	print("putinhand",srvname,pid,args)
 	local obj = player:getobject(pid)

@@ -142,6 +142,7 @@ war_matchplayer 504 {
 	leftatkcnt 5 : integer
 	state 6 : StateType
 	sid 7 : integer
+	pos 8 : integer
 }
 
 .WeaponType {
