@@ -186,10 +186,7 @@ war_matchplayer 504 {
 # removefromwar {id=integer}
 # 对于奥秘牌，sid为0
 # playcard {id=integer,sid=integer,os=integer,targetid=integer}
-# footman_attack_footman {id=integer,targetid=integer}
-# footman_attack_hero {id=integer,targetid=integer}
-# hero_attack_footman {id=integer,targetid=integer}
-# hero_attack_hero {id=integer,targetid=integer}
+# launchattack {id=integer,targetid=integer}
 # putinhand {id=integer,sid=integer,pos=integer}
 # removefromhand {id=integer}
 # addsecret {id=integer}

@@ -143,16 +143,10 @@ function CMD.delfootman(srvname,pid,args)
 end
 
 function CMD.playcard(srvname,pid,args)
-end
-function CMD.footman_attack_footman(srvname,pid,args)
+
 end
 
-function CMD.footman_attack_hero(srvname,pid,args)
-end
-
-function CMD.hero_attack_footman(srvname,pid,args)
-end
-function CMD.hero_attack_hero(srvname,pid,args)
+function CMD.launchattack(srvname,pid,args)
 end
 
 function CMD.putinhand(srvname,pid,args)
