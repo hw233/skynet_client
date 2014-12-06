@@ -56,6 +56,12 @@ war_giveupwar 507 {
 	}
 }
 
+war_lookcards_confirm 580 {
+	request {
+		pos 0 : integer
+	}
+}
+
 ]]
 
 proto.s2c = [[
@@ -166,6 +172,7 @@ war_matchplayer 504 {
 	weapon 10 : WeaponType
 	targetid 11 : integer
 	srcid 12 : integer
+	sids 13 : *integer
 }
 
 # addbuff {id=integer,buff=BuffType}
@@ -201,6 +208,8 @@ war_matchplayer 504 {
 # set_cure_multiple {value=integer}
 # set_magic_hurt_multiple {value=integer}
 # set_cure_to_hurt {value=boolean}
+# lookcards {sids=*integer}
+# lookcards_discard {pos=integer}
 
 .CmdType {
 	pid 0 : integer

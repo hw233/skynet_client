@@ -234,6 +234,12 @@ function CMD.setleftatkcnt(srvname,pid,args)
 	end
 end
 
+function CMD.lookcards(srvname,pid,args)
+end
+
+function CMD.lookcards_discard(srvname,pid,args)
+end
+
 
 local RESPONSE = {}
 netwar.RESPONSE = RESPONSE
