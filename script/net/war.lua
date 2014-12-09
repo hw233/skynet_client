@@ -114,6 +114,10 @@ function CMD.equipweapon(srvname,pid,args)
 end
 function CMD.setweaponusecnt(srvname,pid,args)
 end
+
+function CMD.setweaponatk(srvname,pid,args)
+end
+
 function CMD.useskill(srvname,pid,args)
 end
 function CMD.addfootman(srvname,pid,args)
@@ -238,6 +242,15 @@ function CMD.lookcards(srvname,pid,args)
 end
 
 function CMD.lookcards_discard(srvname,pid,args)
+end
+
+function CMD.clearhandcard(srvname,pid,args)
+end
+
+function CMD.set_magic_hurt_adden(srvname,pid,args)
+end
+
+function CMD.set_card_magic_hurt_adden(srvname,pid,args)
 end
 
 

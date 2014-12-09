@@ -149,6 +149,7 @@ war_matchplayer 504 {
 	state 6 : StateType
 	sid 7 : integer
 	pos 8 : integer
+	magic_hurt_adden 9 : integer
 }
 
 .WeaponType {
@@ -188,6 +189,7 @@ war_matchplayer 504 {
 # delweapon {id=integer}
 # equipweapon {id=integer,weapon=WeaponType}
 # setweaponusecnt {id=integer,value=integer}
+# setweaponatk {id=integer,value=integer}
 # useskill {id=integer,targetid=integer}
 # putinwar {pos=integer,warcard=WarCardType}
 # removefromwar {id=integer}
@@ -208,8 +210,11 @@ war_matchplayer 504 {
 # set_cure_multiple {value=integer}
 # set_magic_hurt_multiple {value=integer}
 # set_cure_to_hurt {value=boolean}
+# set_magic_hurt_adden {value=integer}
+# set_card_magic_hurt_adden {id=integer,value=integer}
 # lookcards {sids=*integer}
 # lookcards_discard {pos=integer}
+# clearhandcard {}
 
 .CmdType {
 	pid 0 : integer
