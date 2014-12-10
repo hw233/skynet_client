@@ -130,6 +130,11 @@ war_matchplayer 504 {
 	value 2 : Halo
 }
 
+.LRHaloType {
+	addmaxhp 0 : integer
+	addatk 1 : integer
+}
+
 .StateType {
 	assault 0 : integer
 	sneer 1 : integer
@@ -215,6 +220,7 @@ war_matchplayer 504 {
 # lookcards {sids=*integer}
 # lookcards_discard {pos=integer}
 # clearhandcard {}
+# setlrhalo {id=integer,value=LRHaloType,}
 
 .CmdType {
 	pid 0 : integer

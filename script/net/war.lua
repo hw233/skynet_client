@@ -253,6 +253,8 @@ end
 function CMD.set_card_magic_hurt_adden(srvname,pid,args)
 end
 
+function CMD.setlrhalo(srvname,pid,args)
+end
 
 local RESPONSE = {}
 netwar.RESPONSE = RESPONSE

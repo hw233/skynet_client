@@ -298,17 +298,17 @@ function shuffle(list,inplace)
 	if not inplace then
 		list = deepcopy(list)
 	end
-	local idx = 1
-	local tmp
-	for i = 2, #list do
-		if ishit(50,100) then
-			tmp = list[idx]
-			list[idx] = list[i]
-			list[i] = tmp
-		end
+	local idx,tmp
+	local len = #list
+	for i = 1,len-1 do
+		idx = math.random(i,len)
+		tmp = list[idx]
+		list[idx] = list[i]
+		list[i] = tmp
 	end
 	return list
 end
+
 
 function randlist(list)
 	assert(#list > 0,"list length need > 0")
