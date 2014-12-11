@@ -120,7 +120,7 @@ end
 
 function CMD.useskill(srvname,pid,args)
 end
-function CMD.addfootman(srvname,pid,args)
+function CMD.putinwar(srvname,pid,args)
 	local obj = player:getobject(pid)
 	local footman = obj:query("footman",{})
 	local id_card = obj:query("id_card",{})
@@ -133,7 +133,7 @@ function CMD.addfootman(srvname,pid,args)
 	obj:set("id_card",id_card)
 end
 
-function CMD.delfootman(srvname,pid,args)
+function CMD.removefromwar(srvname,pid,args)
 	local obj = player:getobject(pid)
 	local footman = obj:query("footman")
 	for i,v in ipairs(footman) do
@@ -254,6 +254,15 @@ function CMD.set_card_magic_hurt_adden(srvname,pid,args)
 end
 
 function CMD.setlrhalo(srvname,pid,args)
+end
+
+function CMD.cancelchoice(srvname,pid,args)
+end
+
+function CMD.addeffect(srcname,pid,args)
+end
+
+function CMD.deleffect(srcname,pid,args)
 end
 
 local RESPONSE = {}

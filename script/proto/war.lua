@@ -29,6 +29,7 @@ war_playcard 503 {
 		cardid 0 : integer
 		pos 1 : integer
 		targetid 2 : integer
+		choice 3 : integer
 	}
 }
 
@@ -158,11 +159,16 @@ war_matchplayer 504 {
 }
 
 .WeaponType {
-	sid 0 : integer
-	atk 1 : integer
-	usecnt 2 : integer
+	id 0 : integer
+	sid 1 : integer
+	atk 2 : integer
+	usecnt 3 : integer
 }
 
+.EffectType {
+	id 0 : integer
+	sid 1 : integer
+}
 
 .ArgType {
 	id 0 : integer
@@ -221,6 +227,9 @@ war_matchplayer 504 {
 # lookcards_discard {pos=integer}
 # clearhandcard {}
 # setlrhalo {id=integer,value=LRHaloType,}
+# cancelchoice {id=integer}
+# addeffect {id=integer,value=EffectType}
+# deleffect {id=integer,srcid=integer}
 
 .CmdType {
 	pid 0 : integer
