@@ -57,7 +57,7 @@ war_giveupwar 507 {
 	}
 }
 
-war_lookcards_confirm 580 {
+war_lookcards_confirm 508 {
 	request {
 		pos 0 : integer
 	}
@@ -142,7 +142,7 @@ war_matchplayer 504 {
 	shield 2 : integer
 	magic_immune 3 : integer
 	freeze 4 : integer
-	enrage 5 : boolean
+	enrage 5 : integer
 }
 
 .WarCardType {
@@ -163,6 +163,7 @@ war_matchplayer 504 {
 	sid 1 : integer
 	atk 2 : integer
 	usecnt 3 : integer
+	atkcnt 4 : integer
 }
 
 .EffectType {
@@ -180,11 +181,13 @@ war_matchplayer 504 {
 	value 6 : integer
 	buff 7 : BuffType
 	halo 8 : HaloType
-	state 9 : string
+	type 9 : string
 	weapon 10 : WeaponType
 	targetid 11 : integer
 	srcid 12 : integer
 	sids 13 : *integer
+	lrhalo 14 : LRHaloType
+	effect 15 : EffectType
 }
 
 # addbuff {id=integer,buff=BuffType}
@@ -205,7 +208,7 @@ war_matchplayer 504 {
 # putinwar {pos=integer,warcard=WarCardType}
 # removefromwar {id=integer}
 # 对于奥秘牌，sid为0
-# playcard {id=integer,sid=integer,os=integer,targetid=integer}
+# playcard {id=integer,sid=integer,pos=integer,targetid=integer}
 # launchattack {id=integer,targetid=integer}
 # putinhand {id=integer,sid=integer,pos=integer}
 # removefromhand {id=integer}
@@ -213,23 +216,24 @@ war_matchplayer 504 {
 # delsecret {id=integer}
 # setcrystal {value=integer}
 # set_empty_crystal {value=integer}
-# setstate {id=integer,state=string,value=integer}
-# delstate {id=integer,state=string}
+# setstate {id=integer,type=string,value=integer}
+# delstate {id=integer,type=string}
 # puttocardlib {id=integer}
 # destroycard {sid=integer}
 # setdef {id=integer,value=integer}
 # set_cure_multiple {value=integer}
 # set_magic_hurt_multiple {value=integer}
+# set_hero_hurt_multiple {value=integer}
 # set_cure_to_hurt {value=boolean}
 # set_magic_hurt_adden {value=integer}
 # set_card_magic_hurt_adden {id=integer,value=integer}
 # lookcards {sids=*integer}
 # lookcards_discard {pos=integer}
 # clearhandcard {}
-# setlrhalo {id=integer,value=LRHaloType,}
+# setlrhalo {id=integer,lrhalo=LRHaloType,}
 # cancelchoice {id=integer}
-# addeffect {id=integer,value=EffectType}
-# deleffect {id=integer,srcid=integer}
+# addeffect {id=integer,type=string,effect=EffectType}
+# deleffect {id=integer,type=string,srcid=integer}
 
 .CmdType {
 	pid 0 : integer
