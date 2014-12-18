@@ -224,7 +224,7 @@ war_matchplayer 504 {
 # set_cure_multiple {value=integer}
 # set_magic_hurt_multiple {value=integer}
 # set_hero_hurt_multiple {value=integer}
-# set_cure_to_hurt {value=boolean}
+# set_cure_to_hurt {value=integer}
 # set_magic_hurt_adden {value=integer}
 # set_card_magic_hurt_adden {id=integer,value=integer}
 # lookcards {sids=*integer}
