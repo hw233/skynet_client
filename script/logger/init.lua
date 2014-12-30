@@ -65,7 +65,7 @@ end
 function logger.gethandle(name)
 	if not logger.handles[name] then
 		local filename = logger.path .. name .. ".log"
-		local parent_path = string.match(name,"([^/]*)/.*")
+		local parent_path = string.match(name,"(.*)/.*")
 		if parent_path then
 			os.execute("mkdir -p " .. logger.path .. parent_path)
 		end
@@ -94,6 +94,7 @@ function logger.init()
 	os.execute(string.format("ls -R %s > .log.tmp",logger.path))
 	fd = io.open(".log.tmp","r")
 	local filename
+	local name
 	local section = ""
 	for line in fd:lines() do
 		if line:sub(#line) == ":" then
