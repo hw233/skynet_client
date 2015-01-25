@@ -7,5 +7,6 @@ function net.init()
 	net.msg = require "script.net.msg"
 	net.friend = require "script.net.friend"
 	net.war = require "script.net.war"
+	net.mail = require "script.net.mail"
 end
 return net

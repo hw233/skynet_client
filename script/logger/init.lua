@@ -37,13 +37,24 @@ function logger.critical(filename,...)
 	if logger.mode > logger.LOG_CRITICAL then
 		return
 	end
-	logger.write(filename,string.format("[%s] [%s] %s\n",os.date("%Y-%m-%d %H:%M:%S"),"CRITICAL",table.concat({...},"\t")))
+	local msg = string.format("[%s] [%s] %s\n",os.date("%Y-%m-%d %H:%M:%S"),"CRITICAL",table.concat({...},"\t"))
+	logger.write(filename,msg)
+	--logger.sendmail("2457358113@qq.com","CRITICAL",msg)
 end
 
 function logger.log(mode,filename,...)
 	local log = assert(logger[mode],"invalid mode:" .. tostring(mode))
-	assert(select("#",...) > 0,string.format("%s %s:null log",mode,filename))
+	assert(select("#",...) > 0,string.format("%s %s:null logname",mode,filename))
 	log(filename,...)
+end
+
+function logger.sendmail(to_list,subject,content)
+	function escape(str) 
+		local ret = string.gsub(str,"\"","\\\"")
+		return ret
+	end
+	strsh = string.format("cd ../shell && python sendmail.py %s \"%s\" \"%s\"",to_list,escape(subject),escape(content))
+	os.execute(strsh)
 end
 
 -- console/print
@@ -69,8 +80,10 @@ function logger.gethandle(name)
 		if parent_path then
 			os.execute("mkdir -p " .. logger.path .. parent_path)
 		end
-		logger.handles[name] = io.open(filename,"a+b")
-		assert(logger.handles[name],"logfile open failed:" .. tostring(filename))
+		local fd  = io.open(filename,"a+b")
+		assert(fd,"logfile open failed:" .. tostring(filename))
+		fd:setvbuf("line")
+		logger.handles[name] = fd
 	end
 	return logger.handles[name]
 end
@@ -112,7 +125,10 @@ function logger.init()
 				end
 				filename = logger.path .. name .. ".log"
 				--print(filename)
-				logger.handles[name] = io.open(filename,"a+b")
+				local fd  = io.open(filename,"a+b")
+				assert(fd,"logfile open failed:" .. tostring(filename))
+				fd:setvbuf("line")
+				logger.handles[name] = fd
 			end
 		end
 	end
