@@ -1,31 +1,37 @@
 --------------------------------------------------
---函数包装器(最后一个形参不能为nil,为nil会丢失参数),中间的nil值会自动转换成false
---用法: f = functor(print,1,"hello")
---      f(2,"world",nil,3) ==> 1,hello,2,world,nil,3
+--函数包装器
+--用法:
+--local func = functor(print,1,2,nil,nil)
+-- func(4,5)	-- 1,2,nil,nil,4,5
+-- func(7,8)	-- 1,2,nil,nil,7,8
+-- func(7,nil,9,nil,nil)	-- 1,2,nil,nil,7,nil,9,nil,nil
+-- local func2 = functor(func,4,5,nil)
+-- func2(5,nil,6,nil)	-- 1,2,nil,nil,4,5,nil,5,nil,6,nil
 --------------------------------------------------
 local callmeta = {}
 callmeta.__call = function (func,...)
-	args = {...}
+	local args = table.pack(...)
 	if type(func) == "function" then
 		return func(...)
 	elseif type(func) ~= "table" then
-		print(debug.traceback("functor.call",1))
+		error("not callable")
 	else
-		local allargs = func.__args
-		local len = #allargs
-		for i = 1, #args do
-			allargs[len+i] = args[i] or false
+		local n = func.__args.n
+		local allargs = {}
+		for i = 1,n do
+			allargs[i] = func.__args[i]
 		end
-		return func.__fn(table.unpack(allargs))
+		for i = 1,args.n do
+			allargs[n+i] = args[i]
+		end
+		n = n + args.n
+		return func.__fn(table.unpack(allargs,1,n))
 	end
 end
 
 function functor(func,...)
-	args = {...}
-	-- 用false代替nil值，防止丢失位置参数
-	for i = 1,#args do
-		args[i] = args[i] or false
-	end
+	assert(func,"cann't wrapper a nil func")
+	local args = table.pack(...)
 	local wrap = {}
 	wrap.__fn = func
 	wrap.__args = args
@@ -34,3 +40,13 @@ function functor(func,...)
 	return wrap
 end
 
+-- function test()
+-- 	local func = functor(print,1,2,nil,nil)
+-- 	func(4,5)	-- 1,2,nil,nil,4,5
+-- 	func(7,8)	-- 1,2,nil,nil,7,8
+-- 	func(7,nil,9,nil,nil)	-- 1,2,nil,nil,7,nil,9,nil,nil
+-- 	local func2 = functor(func,4,5,nil)
+-- 	func2(5,nil,6,nil)	-- 1,2,nil,nil,4,5,nil,5,nil,6,nil
+-- end
+
+ test()
