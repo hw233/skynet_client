@@ -67,6 +67,12 @@ login_kick 1 {
 		reason 0 : string
 	}
 }
+
+login_queue 2 {
+	request {
+		waitnum 0 : integer
+	}
+}
 ]]
 
 return proto

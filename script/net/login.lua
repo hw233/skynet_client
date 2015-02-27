@@ -12,6 +12,9 @@ function REQUEST.kick(srvname,request)
 	socketmgr.close(srvname)	
 end
 
+function REQUEST.queue(srvname,request)
+end
+
 
 local RESPONSE = {}
 netlogin.RESPONSE = RESPONSE
