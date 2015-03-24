@@ -23,11 +23,10 @@ function RESPONSE.register(srvname,request,response)
 	local result = assert(response.result)
 	print("register",result)
 	local player = getplayer()
-	if result == "200 Ok" then
+	if result == STATUS_OK then
 		player:set("account",request.account)	
 		player:set("passwd",request.passwd)
-		player:set("srvname",request.srvname)
-	elseif result == "201 Account exist" then
+	elseif result == STATUS_ACCT_AREADY_EXIST then
 	end
 end
 
@@ -35,11 +34,11 @@ function RESPONSE.login(srvname,request,response)
 	local result = assert(response.result)
 	print("login",result)
 	local player = getplayer()
-	if result == "200 Ok" then
+	if result == STATUS_OK then
 		player:set("account",request.account)	
 		player:set("passwd",request.passwd)
-	elseif result == "202 Account nonexist" then
-	elseif result == "203 Password error" then
+	elseif result == STATUS_ACCT_NOEXIST then
+	elseif result == STATUS_PASSWD_NOMATCH then
 	end
 end
 
@@ -47,11 +46,11 @@ function RESPONSE.createrole(srvname,request,response)
 	local result = assert(response.result)
 	print("createrole",result)
 	local player = getplayer()
-	if result == "200 Ok" then
-		local roleid = assert(response.newrole)
-		player:set("pid",roleid)
-	elseif result == "301 Invalid roletype" then
-	elseif result == "302 Invalid name" then
+	if result == STATUS_OK then
+		local role = assert(response.newrole)
+		player:set("pid",role.roleid)
+	elseif result == STATUS_ROLETYPE_INVALID then
+	elseif result == STATUS_NAME_INVALID then
 	end
 end
 
@@ -60,7 +59,7 @@ function RESPONSE.entergame(srvname,request,response)
 	local result = assert(response.result)
 	print("entergame",result)
 	local player = getplayer()
-	if result == "200 Ok" then
+	if result == STATUS_OK then
 		player:set("pid",request.roleid)
 	end
 end

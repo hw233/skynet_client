@@ -8,15 +8,16 @@ login_register 1 {
 		srvname 2 : string
 	}
 	response {
-		# 200 Ok; 201 Account exist; 204 Invalid account format; 205 Invalid password format
-		result 0 : string
+		# see errcode.lua
+		result 0 : integer
 	}
 }
 
 .RoleType {
-		pid 0 : integer
-		name 1 : string
-		roletype 2 : integer
+	roleid 0 : integer
+	roletype 1 : integer
+	name 2 : string
+	lv 3 : integer
 }
 
 login_createrole 2 {
@@ -26,8 +27,8 @@ login_createrole 2 {
 		name 2 : string
 	}
 	response {
-		# 200 Ok; 301 Invalid roletype; 302 Invalid name; 303 Over limit
-		result 0 : string
+		# see errcode.lua
+		result 0 : integer
 		newrole 1 : RoleType
 	}
 }
@@ -40,8 +41,8 @@ login_login 3 {
 		passwd 1 : string
 	}
 	response {
-		# 200 Ok; 202 Account nonexist; 203 Password error
-		result 0 : string
+		# see errcode.lua
+		result 0 : integer
 		roles 1 : *RoleType
 	}
 }
@@ -52,8 +53,8 @@ login_entergame 4 {
 		roleid 0 : integer
 	}
 	response {
-		# 200 Ok; 401 Repeat login;
-		result 0 : string
+		# see errcode.lua
+		result 0 : integer
 	}
 }
 
