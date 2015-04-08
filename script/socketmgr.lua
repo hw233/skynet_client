@@ -11,7 +11,7 @@ socketmgr = socketmgr or {}
 function socketmgr.init()
 	socketmgr.servers = {}
 	for srvname,v in pairs(srvlist) do
-		socketmgr.getsrv(srvname)
+		pcall(socketmgr.getsrv,srvname)
 	end
 end
 
