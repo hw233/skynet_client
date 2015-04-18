@@ -78,7 +78,7 @@ proto.s2c = [[
 	items 2 : *ItemType
 }
 
-mail_syncmail 500 {
+mail_syncmail 700 {
 	request {
 		mailid 0 : integer
 		pid 1 : integer

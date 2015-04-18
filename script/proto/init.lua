@@ -17,9 +17,9 @@ local function request(srvname,cmd,request,response)
 		request = request,
 	})
 	-- test(buff net data)
-	require "script.socketmgr"
-	local srv = socketmgr.getsrv(srvname)
-	srv.netbuff[cmd] = request
+	--require "script.socketmgr"
+	--local srv = socketmgr.getsrv(srvname)
+	--srv.netbuff[cmd] = request
 
 	local protoname,cmd = string.match(cmd,"([^_]-)%_(.+)") 
 	local REQUEST = net[protoname].REQUEST
