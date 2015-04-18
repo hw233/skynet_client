@@ -18,7 +18,7 @@ card_updatecardtable 400 {
 card_delcardtable 401 {
 	request {
 		id 0 : integer
-		mode : integer
+		mode 1: integer
 	}
 }
 
