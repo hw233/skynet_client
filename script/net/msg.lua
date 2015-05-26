@@ -1,6 +1,11 @@
 require "script.base"
 netmsg = netmsg or {}
 
+-- c2s
+function netmsg.onmessagebox(srvname,request)
+	socketmgr.send_request(srvname,"msg","onmessagebox",request)
+end
+
 -- s2c
 local REQUEST = {}
 netmsg.REQUEST = REQUEST
