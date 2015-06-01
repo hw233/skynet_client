@@ -4,6 +4,8 @@ require "script.base.databaseable"
 require "script.base.netcache"
 require "script.errcode"
 
+unpack = unpack or table.unpack
+
 STARTTIME1 = 1408896000  --2014-08-25 00:00:00 Mon Aug
 STARTTIME2 = 1408809600  --2014-08-24 00:00:00 Sun Aug
 HOUR_SECS = 3600
