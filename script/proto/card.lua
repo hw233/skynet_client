@@ -7,6 +7,7 @@ card_updatecardtable 400 {
 		race 1: integer
 		# card sid array
 		cards 2 : *integer
+		# 0--normal; 1--nolimit
 		mode 3 : integer 
 	}
 	response {

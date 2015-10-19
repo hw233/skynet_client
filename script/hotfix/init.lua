@@ -16,8 +16,10 @@ function hotfix.hotfix(modname)
 		logger.log("warning","hotfix",string.format("cann't hotfix non-script code,module=%s",modname))
 		return
 	end
-	if ignore_module[modname] then
-		return
+	for i,patten in ipairs(ignore_module) do
+		if modname == string.match(modname,patten) then
+			return
+		end
 	end
 	local chunk,err
 	local errlist = {}
