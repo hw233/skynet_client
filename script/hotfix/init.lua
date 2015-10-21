@@ -1,7 +1,5 @@
-require "script.logger"
 
-
-local patten = "./?.lua;./?/init.lua"
+local patten = "./?.lua"
 local ignore_module = {
 }
 

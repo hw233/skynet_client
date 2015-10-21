@@ -1,16 +1,7 @@
-package.path = "skynet/lualib/?.lua;./?.lua;./?/init.lua"
-package.cpath = "skynet/luaclib/?.so"
+--package.path = "skynet/lualib/?.lua;./?.lua;./?/init.lua"
+--package.cpath = "skynet/luaclib/?.so"
 
-require "script.base"
-require "script.conf.srvlist"
-require "script.socketmgr"
-require "script.player"
-
-local function test(srvname,account,passwd)
-	local player = getplayer()
-	player:set("srvname",srvname)
-	player:set("account",account)
-	player:set("passwd",passwd)
+local function test(srvname,account,passwd,callback)
 	function onlogin(srvname,request,response)
 		local result = assert(response.result)	
 		pprintf("login:%s,roles:%s",result,response.roles)
@@ -63,9 +54,10 @@ local function test(srvname,account,passwd)
 	function onentergame(srvname,request,response)
 		local result = assert(response.result)
 		print("entergame:",result)
-		player:set("pid",request.roleid)
+		if callback then
+			callback()
+		end
 	end
-	
 
 	sendpackage(srvname,"login","login",{
 		account = account,

@@ -1,10 +1,5 @@
 local socket = require "clientsocket"
 local bit32 = require "bit32"
-require "script.base"
-require "script.proto"
-
--- conf
-require "script.conf.srvlist"
 
 socketmgr = socketmgr or {}
 
@@ -90,8 +85,8 @@ function socketmgr.send_package(srvname,pack)
 	local package = string.char(bit32.extract(size,8,8)) ..
 		string.char(bit32.extract(size,0,8)) ..
 		pack
-	local sprotoparser = require "sprotoparser"
-	sprotoparser.dump(pack)
+	--local sprotoparser = require "sprotoparser"
+	--sprotoparser.dump(pack)
 	socket.send(fd,package)
 end
 

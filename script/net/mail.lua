@@ -1,5 +1,3 @@
-require "script.base"
-
 netmail = netmail or {}
 
 -- c2s

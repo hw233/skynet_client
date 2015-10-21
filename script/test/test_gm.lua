@@ -1,10 +1,10 @@
-require "script.base"
-require "script.test.test_login"
+local login = require "script.test.test_login"
 
 
-local function test()
-	login("gs","robert1","123")	
-	login("gs","robert2","123")
+local function test(srvname)
+	srvname = srvname or "gamesrv_100"
+	login(srvname,"robert1","123")	
+	login(srvname,"robert2","123")
 end
 
 return test

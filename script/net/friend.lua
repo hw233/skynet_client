@@ -1,5 +1,3 @@
-require "script.base"
-
 netfriend = netfriend or {}
 
 -- s2c

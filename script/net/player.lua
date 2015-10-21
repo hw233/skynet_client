@@ -1,5 +1,3 @@
-require "script.base"
-
 netplayer = netplayer or {}
 
 -- s2c

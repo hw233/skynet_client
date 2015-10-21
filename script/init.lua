@@ -5,17 +5,17 @@ local cpaths = {
 local paths = {
 	root .. "lualib/?.lua",
 	"./?.lua",
-	"./?/init.lua",
+	--"./?/init.lua",
 }
 package.cpath = package.cpath ..";".. table.concat(cpaths,";")
 package.path = package.path .. ";" .. table.concat(paths,";")
 
-require "script.base"
-require "script.net"
-require "script.proto"
+require "script.base.init"
+require "script.net.init"
+require "script.proto.init"
 require "script.socketmgr"
-require "script.logger"
-require "script.player"
+require "script.logger.init"
+require "script.conf.srvlist"
 
 local function dispatch()
 	while true do
@@ -28,7 +28,6 @@ local function dispatch()
 		else
 			print(result)
 		end
-		
 	end
 end
 
@@ -37,7 +36,6 @@ function init()
 	net.init()
 	proto.init()
 	socketmgr.init()
-	getplayer() -- create a player
 	dispatch()
 end
 

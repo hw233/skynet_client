@@ -1,4 +1,3 @@
-require "script.base"
 netmsg = netmsg or {}
 
 -- c2s

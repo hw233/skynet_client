@@ -1,6 +1,3 @@
-require "script.base"
-require "script.socketmgr"
-
 netteam = netteam or {}
 -- c2s
 

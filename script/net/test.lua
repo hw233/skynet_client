@@ -1,6 +1,3 @@
-require "script.base"
-require "script.socketmgr"
-
 nettest = nettest or {}
 -- c2s
 function nettest.handshake(srvname)

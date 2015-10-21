@@ -1,5 +1,3 @@
-require "script.base"
-require "script.socketmgr"
 
 netscene = netscene or {}
 -- c2s
