@@ -31,12 +31,41 @@ local function dispatch()
 	end
 end
 
-function init()
+local function usage()
+	print([[
+		usage: lua script/init.lua [script|-f script_file]
+	]])
+end
+
+local function init(...)
+	local args = {...}
 	logger.init()
 	net.init()
 	proto.init()
 	socketmgr.init()
 	dispatch()
+	if #args == 0 then
+	elseif #args >= 1 then
+		if args[1] == "-f" then -- script file
+			local script_file = args[2]
+			local func = loadfile(script_file)
+			if func then
+				func(select(3,...))
+			else
+				usage()
+			end
+		else					-- script
+			local script = args[1]
+			local func = load(script)
+			if func then
+				func(select(2,...))
+			else
+				usage()
+			end
+		end
+	else
+		usage()
+	end
 end
 
-init()
+init(...)

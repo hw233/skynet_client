@@ -1,7 +1,5 @@
 local socket = require "clientsocket"
 local sproto = require "sproto"
-require "script.base"
-require "script.net"
 
 proto = proto or {}
 
@@ -10,10 +8,6 @@ local function onrequest(srvname,cmd,request,response)
 		cmd = cmd,
 		request = request,
 	})
-	-- test(buff net data)
-	--require "script.socketmgr"
-	--local srv = socketmgr.getsrv(srvname)
-	--srv.netbuff[cmd] = request
 
 	local protoname,subprotoname = string.match(cmd,"([^_]-)%_(.+)") 
 	if not net[protoname] then

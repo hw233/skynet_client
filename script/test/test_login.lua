@@ -1,6 +1,3 @@
---package.path = "skynet/lualib/?.lua;./?.lua;./?/init.lua"
---package.cpath = "skynet/luaclib/?.so"
-
 local function test(srvname,account,passwd,callback)
 	function onlogin(srvname,request,response)
 		local result = assert(response.result)	
@@ -21,7 +18,7 @@ local function test(srvname,account,passwd,callback)
 			else
 				local role = assert(roles[1],"no role")
 				sendpackage(srvname,"login","entergame",{
-					roleid = role.roleid,	
+					roleid = role.roleid,
 				},onentergame)
 			end
 			
