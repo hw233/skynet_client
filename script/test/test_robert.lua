@@ -92,11 +92,15 @@ end
 
 function main(...)
 	local pid = ...
-	assert(tonumber(pid),pid)
+	assert(tonumber(pid),"Invliad pid:"..tostring(pid))
 	login = require "script.test.test_login"
 	local account = "#" .. pid
 	local passwd = "6c676c"
 	login(srvname,account,passwd,callback)
 end
 
+local modname = ...
+if modname ~= "script.test.test_robert" then
+	main(...)
+end
 return main

@@ -65,14 +65,14 @@ local function dispatch(srvname,typ,...)
 end
 
 function proto.dispatch(srvname,v)
-	print(srvname,v)
+	--print(srvname,v)
 	dispatch(srvname,proto.host:dispatch(v))
 end
 
 
 function proto.init()
 	local text_proto = require "script.proto.proto"
-	text_proto.dump()
+	--text_proto.dump()
 	proto.host = sproto.parse(text_proto.s2c):host "package"
 	proto.request = proto.host:attach(sproto.parse(text_proto.c2s))
 end

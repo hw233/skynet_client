@@ -17,9 +17,16 @@ require "script.socketmgr"
 require "script.logger.init"
 require "script.conf.srvlist"
 
-local function dispatch()
+local function dispatch(...)
+	local args = {...}
 	while true do
-		local ok,result = pcall(socketmgr.dispatch)
+		local ok,result
+		if args then	
+			args = nil
+			ok,result = pcall(socketmgr.dispatch,...)
+		else
+			ok,result = pcall(socketmgr.dispatch)
+		end
 		if ok then
 			if result == "exit" then
 				print("client gameover")
@@ -31,41 +38,12 @@ local function dispatch()
 	end
 end
 
-local function usage()
-	print([[
-		usage: lua script/init.lua [script|-f script_file]
-	]])
-end
-
 local function init(...)
-	local args = {...}
 	logger.init()
 	net.init()
 	proto.init()
 	socketmgr.init()
-	dispatch()
-	if #args == 0 then
-	elseif #args >= 1 then
-		if args[1] == "-f" then -- script file
-			local script_file = args[2]
-			local func = loadfile(script_file)
-			if func then
-				func(select(3,...))
-			else
-				usage()
-			end
-		else					-- script
-			local script = args[1]
-			local func = load(script)
-			if func then
-				func(select(2,...))
-			else
-				usage()
-			end
-		end
-	else
-		usage()
-	end
+	dispatch(...)
 end
 
 init(...)

@@ -112,7 +112,14 @@ function socketmgr.send_request(srvname,protoname,cmd,request,onresponse)
 	socketmgr.send_package(srvname,str)
 end
 
-function socketmgr.dispatch()
+local function usage()
+	print("usage: lua script/init.lua [script|-f script_file]")
+end
+
+
+function socketmgr.dispatch(...)
+	local args = {...}
+	print("socketmgr.dispatch ",...)
 	for srvname,srv in pairs(socketmgr.servers)	do
 		--print("srvname",srvname)
 		while true do
@@ -122,18 +129,40 @@ function socketmgr.dispatch()
 			end
 			proto.dispatch(srvname,v)
 		end
-		cmd = socket.readstdin()
-		if cmd then
-			if cmd == "exit" then
-				return "exit"
+		if #args == 0 then
+			cmd = socket.readstdin()
+			if cmd then
+				if cmd == "exit" then
+					return "exit"
+				end
+				local func = load(cmd)	
+				local ok,result = pcall(func)
+				if not ok then
+					print(result)
+				end
+			else
+				socket.usleep(100)
 			end
-			local func = load(cmd)	
-			local ok,result = pcall(func)
-			if not ok then
-				print(result)
+		elseif #args >= 1 then
+			if args[1] == "-f" then -- script file
+				local script_file = args[2]
+				local func = loadfile(script_file)
+				if func then
+					func(select(3,...))
+				else
+					usage()
+				end
+			else					-- script
+				local script = args[1]
+				local func = load(script)
+				if func then
+					func(select(2,...))
+				else
+					usage()
+				end
 			end
 		else
-			socket.usleep(100)
+			usage()
 		end
 	end
 end
