@@ -119,7 +119,6 @@ end
 
 function socketmgr.dispatch(...)
 	local args = {...}
-	print("socketmgr.dispatch ",...)
 	for srvname,srv in pairs(socketmgr.servers)	do
 		--print("srvname",srvname)
 		while true do
