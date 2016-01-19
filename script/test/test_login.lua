@@ -50,7 +50,7 @@ local function test(srvname,account,passwd,callback)
 
 	function onentergame(srvname,request,response)
 		local result = assert(response.result)
-		print("entergame:",result)
+		print("entergame ",result==0 and "ok" or "fail")
 		if callback then
 			callback()
 		end
