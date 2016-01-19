@@ -6,7 +6,7 @@ socketmgr = socketmgr or {}
 function socketmgr.init()
 	socketmgr.servers = {}
 	for srvname,v in pairs(srvlist) do
-		pcall(socketmgr.getsrv,srvname)
+		--pcall(socketmgr.getsrv,srvname)
 	end
 end
 
@@ -116,54 +116,31 @@ local function usage()
 	print("usage: lua script/init.lua [script|-f script_file]")
 end
 
-
-function socketmgr.dispatch(...)
-	local args = {...}
-	for srvname,srv in pairs(socketmgr.servers)	do
-		--print("srvname",srvname)
+function socketmgr.dispatch()
+	while true do
+		socket.usleep(100)
 		while true do
-			local v = socketmgr.recv_package(srvname)
-			if not v then
-				break
+			for srvname,srv in pairs(socketmgr.servers) do
+				local v = socketmgr.recv_package(srvname)
+				if not v then
+					break
+				end
+				proto.dispatch(srvname,v)
 			end
-			proto.dispatch(srvname,v)
-		end
-		if #args == 0 then
-			cmd = socket.readstdin()
+			local cmd = socket.readstdin()
 			if cmd then
 				if cmd == "exit" then
-					return "exit"
+					break
 				end
 				local func = load(cmd)	
 				local ok,result = pcall(func)
 				if not ok then
 					print(result)
 				end
-			else
-				socket.usleep(100)
 			end
-		elseif #args >= 1 then
-			if args[1] == "-f" then -- script file
-				local script_file = args[2]
-				local func = loadfile(script_file)
-				if func then
-					func(select(3,...))
-				else
-					usage()
-				end
-			else					-- script
-				local script = args[1]
-				local func = load(script)
-				if func then
-					func(select(2,...))
-				else
-					usage()
-				end
-			end
-		else
-			usage()
 		end
 	end
 end
+
 
 return socketmgr

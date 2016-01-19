@@ -38,12 +38,12 @@ local function dispatch(...)
 	end
 end
 
-local function init(...)
+local function init()
 	logger.init()
 	net.init()
 	proto.init()
 	socketmgr.init()
-	dispatch(...)
+	dispatch()
 end
 
-init(...)
+init()
