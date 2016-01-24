@@ -113,7 +113,7 @@ function socketmgr.send_request(srvname,protoname,cmd,request,onresponse)
 end
 
 local function usage()
-	print("usage: lua script/init.lua [script|-f script_file]")
+	print("usage: lua script/init.lua")
 end
 
 function socketmgr.dispatch()
