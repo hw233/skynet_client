@@ -10,7 +10,10 @@ function socketmgr.init()
 	end
 end
 
-
+function getplayer(srvname)
+	local srv = socketmgr.getsrv(srvname)
+	return srv.player
+end
 
 function socketmgr.getsrv(srvname)
 	if not socketmgr.servers[srvname] then
@@ -23,6 +26,7 @@ function socketmgr.getsrv(srvname)
 			srvname = srvname,
 			last = "",
 			--netbuff = {},
+			player = {},  -- 暂时用这个存玩家数据
 		}
 		socketmgr.servers[srvname] = tmp
 	end
@@ -72,7 +76,7 @@ function socketmgr.recv_package(srvname)
 	end
 	if r == "" then
 		socketmgr.onclose(srvname)
-		error "Server closed"
+		error(string.format("%s server closed",srvname))
 	end
 	result,srv.last = socketmgr.unpack_package(srv.last .. r)
 	return result
@@ -94,7 +98,7 @@ end
 function socketmgr.send_request(srvname,protoname,cmd,request,onresponse)
 	local srv = socketmgr.getsrv(srvname)
 	srv.session = srv.session + 1
-	pprintf("Request:%s\n",{
+	pprintf("[send] REQUEST:%s\n",{
 		session = srv.session,
 		srvname = srvname,
 		protoname = protoname,

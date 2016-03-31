@@ -12,6 +12,16 @@ end
 function REQUEST.queue(srvname,request)
 end
 
+function REQUEST.reentergame(srvname,request)
+	local go_srvname = assert(request.go_srvname)	
+	local token = assert(request.token)
+	local player = getplayer(srvname)
+	local roleid = player.roleid
+	sendpackage(go_srvname,"login","entergame",{
+		roleid = roleid,
+		token = token,
+	})
+end
 
 local RESPONSE = {}
 netlogin.RESPONSE = RESPONSE
@@ -46,30 +56,11 @@ end
 
 function RESPONSE.entergame(srvname,request,response)
 	local result = assert(response.result)
-	print("entergame",result)
+	print("entergame",result,srvname,request.roleid)
 	if result == STATUS_OK then
+		local player = getplayer(srvname)
+		player.roleid = request.roleid
 	end
-end
-
-
-function netlogin.register(srvname,request)
-	sendpackage(srvname,"login","register",request)
-end
-
-function netlogin.createrole(srvname,request)
-	sendpackage(srvname,"login","createrole",request)
-end
-
-function netlogin.login(srvname,request)
-	sendpackage(srvname,"login","login",request)
-end
-
-function netlogin.entergame(srvname,request)
-	sendpackage(srvname,"login","entergame",reqeust)
-end
-
-function netlogin.exitgame(srvname,request)
-	sendpackage(srvname,"login","entergame",request)
 end
 
 return netlogin

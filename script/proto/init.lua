@@ -4,7 +4,8 @@ local sproto = require "sproto"
 proto = proto or {}
 
 local function onrequest(srvname,cmd,request,response)
-	pprintf("REQUEST:%s\n",{
+	pprintf("[recv] REQUEST:%s\n",{
+		srvname = srvname,
 		cmd = cmd,
 		request = request,
 	})
@@ -21,7 +22,8 @@ local function onrequest(srvname,cmd,request,response)
 		return
 	end
 	local r = func(srvname,request)
-	pprintf("Response:%s\n",{
+	pprintf("[send] RESPONSE:%s\n",{
+		srvname=  srvname,
 		cmd = cmd,
 		response = r,
 	})
@@ -31,7 +33,7 @@ local function onrequest(srvname,cmd,request,response)
 end
 
 local function onresponse(srvname,session,response)
-	pprintf("RESPONSE:%s\n",{
+	pprintf("[recv] RESPONSE:%s\n",{
 		svrname = srvname,
 		session = session,
 		response = response,
@@ -41,7 +43,9 @@ local function onresponse(srvname,session,response)
 	srv.sessions[session] = nil
 	local callback = ses.onresponse
 	if not callback then
-		callback = net[ses.protoname].RESPONSE[ses.cmd]
+		if net[ses.protoname] and net[ses.protoname].RESPONSE then
+			callback = net[ses.protoname].RESPONSE[ses.cmd]
+		end
 	end
 	if callback then
 		callback(srvname,ses.request,response)
